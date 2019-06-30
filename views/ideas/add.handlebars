@@ -7,11 +7,11 @@
         <form action="/ideas" method="POST">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" class="form-control">
+                <input type="text" name="title" class="form-control" value="{{title}}">
             </div>
             <div class="form-group">
                 <label for="details">Details</label>
-                <textarea name="details" class="form-control"></textarea>
+                <textarea name="details" class="form-control">{{details}}</textarea>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Add idea</button>
         </form>

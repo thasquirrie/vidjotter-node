@@ -49,17 +49,17 @@ router.post('/register', (req, res) => {
                 req.flash('success_msg', 'Email has been registered')
                 res.render('users/register')
             } else {
-                const newUser = {
+                const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
                     password: req.body.password1
-                }
+                });
 
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
                         if (err) throw err;
                         newUser.password = hash;
-                        new User(newUser).save().then(user => {
+                        newUser.save().then(user => {
                             console.log('Registered');
                             req.flash('success_msg', 'Success! You can now log in');
                             res.redirect('/users/login');

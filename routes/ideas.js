@@ -9,7 +9,7 @@ require('../models/Idea');
 const Idea = mongoose.model('ideas');
 
 router.get('/ideas', ensureAuthenticated, (req, res) => {
-    Idea.find().sort().then(ideas => {
+    Idea.find({ user: req.user.id }).sort().then(ideas => {
         res.render('ideas', {
             ideas
         })
@@ -41,12 +41,13 @@ router.post('/ideas', (req, res) => {
     } else {
         const newUser = {
             title: req.body.title,
-            details: req.body.details
+            details: req.body.details,
+            user: req.user.id
         }
 
         new Idea(newUser).save().then(() => {
             console.log("Idea saved")
-            req.flash('success.msg', 'Videa idea added')
+            req.flash('success.msg', 'Video idea added')
             res.redirect('/ideas')
         })
     }
